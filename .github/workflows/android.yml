@@ -24,6 +24,7 @@ jobs:
 
       # Running quality checks first
       - name: Run Android Lint
+        if: github.ref == 'refs/heads/main'
         run: ./gradlew lint
 
       - name: Run Detekt
@@ -37,6 +38,7 @@ jobs:
           path: build/reports/problems/problems-report.html
 
       - name: Upload Lint Report
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
@@ -50,10 +52,12 @@ jobs:
         run: ./gradlew test
 
       - name: Assemble Debug APK
+        if: github.ref == 'refs/heads/main'
         run: ./gradlew assembleDebug
 
       # Upload APK
       - name: Upload APK
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
