@@ -14,15 +14,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ratanapps.consultoapp.ui.theme.ConsultoAppTheme
 
+import androidx.navigation.compose.rememberNavController
+import com.ratanapps.consultoapp.ui.navigation.NavGraph
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ConsultoAppTheme {
+                val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    NavGraph(
+                        navController = navController,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
