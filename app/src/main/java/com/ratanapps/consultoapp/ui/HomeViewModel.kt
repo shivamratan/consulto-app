@@ -23,10 +23,12 @@ class HomeViewModel @Inject constructor(): ViewModel() {
 
     init {
         viewModelScope.launch {
-            delay(500)
+            delay(SPLASH_SCREEN_DELAY)
             _isLoading.value = false
         }
     }
 
-
+    companion object {
+        private const val SPLASH_SCREEN_DELAY = 500L
+    }
 }
