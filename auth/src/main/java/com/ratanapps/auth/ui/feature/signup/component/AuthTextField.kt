@@ -1,4 +1,4 @@
-package com.ratanapps.auth.ui.feature.login.component
+package com.ratanapps.auth.ui.feature.signup.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

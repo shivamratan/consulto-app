@@ -32,6 +32,7 @@ fun NavGraph(
         }
 
         authNavGraph(
+            navController = navController,
             onLoginSuccess = {
                 navController.navigate("home")
             }

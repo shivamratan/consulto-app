@@ -1,4 +1,4 @@
-package com.ratanapps.auth.ui.feature.login
+package com.ratanapps.auth.ui.feature.signup
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,27 +37,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ratanapps.auth.R
-import com.ratanapps.auth.ui.feature.login.component.AuthHeader
-import com.ratanapps.auth.ui.feature.login.component.AuthTextField
-import com.ratanapps.auth.ui.feature.login.component.OrDivider
-import com.ratanapps.auth.ui.feature.login.component.SocialLoginButton
+import com.ratanapps.auth.ui.feature.signup.component.AuthTextField
+import com.ratanapps.auth.ui.feature.signup.component.OrDivider
+import com.ratanapps.auth.ui.feature.signup.component.SocialLoginButton
 
 @Composable
-fun LoginScreen(
+fun SignupScreen(
     modifier: Modifier = Modifier,
-    onSignInClick: (String, String) -> Unit = { _, _ -> },
-    onForgetPasswordClick: () -> Unit = {},
-    onSignUpClick: () -> Unit = {},
+    onSignUpClick: (String, String, String, String) -> Unit = { _, _, _, _ -> },
+    onSignInClick: () -> Unit = {},
     onFacebookClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {}
 ) {
-    var email by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var mobileNumber by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
 
     val titleColor = Color(0xFF3A86B7)
@@ -76,20 +77,23 @@ fun LoginScreen(
         ) {
             Spacer(modifier = Modifier.height(48.dp))
 
-            AuthHeader(
-                title = stringResource(id = R.string.sign_in),
-                subtitle = stringResource(id = R.string.login_subtitle)
+            Text(
+                text = stringResource(id = R.string.create_new_account),
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = titleColor,
+                textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email Field
+            // Full Name Field
             AuthTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = stringResource(id = R.string.email),
-                placeholder = stringResource(id = R.string.enter_your_email),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                value = fullName,
+                onValueChange = { fullName = it },
+                label = stringResource(id = R.string.full_name),
+                placeholder = stringResource(id = R.string.enter_your_full_name),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -117,22 +121,32 @@ fun LoginScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = stringResource(id = R.string.forget_password),
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .clickable { onForgetPasswordClick() },
-                color = Color(0xFF111827),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
+            // Email Field
+            AuthTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = stringResource(id = R.string.email),
+                placeholder = stringResource(id = R.string.enter_your_email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Mobile Number Field
+            AuthTextField(
+                value = mobileNumber,
+                onValueChange = { mobileNumber = it },
+                label = stringResource(id = R.string.mobile_number),
+                placeholder = stringResource(id = R.string.enter_your_phone_number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
 
             Spacer(modifier = Modifier.height(48.dp))
 
             Button(
-                onClick = { onSignInClick(email, password) },
+                onClick = { onSignUpClick(fullName, password, email, mobileNumber) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -140,7 +154,7 @@ fun LoginScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = titleColor)
             ) {
                 Text(
-                    text = stringResource(id = R.string.sign_in),
+                    text = stringResource(id = R.string.sign_up),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -171,14 +185,14 @@ fun LoginScreen(
 
             Text(
                 text = buildAnnotatedString {
-                    append(stringResource(id = R.string.dont_have_account))
+                    append(stringResource(id = R.string.already_have_account))
                     withStyle(style = SpanStyle(color = titleColor, fontWeight = FontWeight.Bold)) {
-                        append(stringResource(id = R.string.sign_up))
+                        append(stringResource(id = R.string.sign_in))
                     }
                 },
                 modifier = Modifier
                     .padding(bottom = 32.dp)
-                    .clickable { onSignUpClick() },
+                    .clickable { onSignInClick() },
                 fontSize = 14.sp,
                 color = textColor
             )
@@ -188,6 +202,6 @@ fun LoginScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
-    LoginScreen()
+fun SignupScreenPreview() {
+    SignupScreen()
 }
