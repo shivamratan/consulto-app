@@ -77,6 +77,9 @@ dependencies {
     // Material Icons dependency
     implementation(libs.material.icons.extended)
 
+    implementation(project(":core"))
+    implementation(project(":auth"))
+
     // Splash screen dependency
     implementation(libs.splashscreen)
 
