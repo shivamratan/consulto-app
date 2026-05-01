@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ratanapps.auth.ui.navigation.authNavGraph
 
 @Composable
 fun NavGraph(
@@ -18,7 +19,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "home",
+        startDestination = "login",
         modifier = modifier
     ) {
         composable("home") {
@@ -29,5 +30,11 @@ fun NavGraph(
                 Text(text = "Welcome to ConsultoApp")
             }
         }
+
+        authNavGraph(
+            onLoginSuccess = {
+                navController.navigate("home")
+            }
+        )
     }
 }
