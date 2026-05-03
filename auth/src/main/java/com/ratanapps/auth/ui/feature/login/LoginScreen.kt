@@ -81,7 +81,7 @@ fun LoginScreen(
                 subtitle = stringResource(id = R.string.login_subtitle)
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             // Email Field
             AuthTextField(
