@@ -129,7 +129,7 @@ fun LoginScreen(
                 fontWeight = FontWeight.SemiBold
             )
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Button(
                 onClick = { onSignInClick(email, password) },
@@ -151,7 +151,7 @@ fun LoginScreen(
 
             OrDivider()
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(14.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -167,7 +167,7 @@ fun LoginScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             Text(
                 text = buildAnnotatedString {

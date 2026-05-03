@@ -54,12 +54,12 @@ fun AuthHeader(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
+            /*Text(
                 text = subtitle,
                 fontSize = 14.sp,
                 color = textColor,
                 lineHeight = 20.sp
-            )
+            )*/
         }
     }
 }
