@@ -132,7 +132,7 @@ fun SignupScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+           /* Spacer(modifier = Modifier.height(24.dp))
 
             // Mobile Number Field
             AuthTextField(
@@ -141,7 +141,7 @@ fun SignupScreen(
                 label = stringResource(id = R.string.mobile_number),
                 placeholder = stringResource(id = R.string.enter_your_phone_number),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-            )
+            )*/
 
             Spacer(modifier = Modifier.height(48.dp))
 
@@ -171,10 +171,10 @@ fun SignupScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                SocialLoginButton(
+                /*SocialLoginButton(
                     onClick = onFacebookClick
                 )
-                Spacer(modifier = Modifier.width(24.dp))
+                Spacer(modifier = Modifier.width(24.dp))*/
                 SocialLoginButton(
                     onClick = onGoogleClick,
                     isGoogle = true
