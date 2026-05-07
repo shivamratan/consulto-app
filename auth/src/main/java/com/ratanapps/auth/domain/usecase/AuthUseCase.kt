@@ -12,16 +12,16 @@ class AuthUseCase @Inject constructor(val authRepository: AuthRepository) {
         return authRepository.login(email, password)
     }
 
-    suspend fun signup(): Task<FirebaseUser> {
-        return authRepository.signup()
+    suspend fun signup(name: String, email: String, password: String): FirebaseUser? {
+        return authRepository.signup(name, email, password)
     }
 
-    suspend fun forgotPassword(): Task<Void> {
-        return authRepository.forgotPassword()
+    suspend fun forgotPassword(email: String): Task<Void> {
+        return authRepository.forgotPassword(email)
     }
 
-    suspend fun googleSignIn(): Task<FirebaseUser> {
-        return authRepository.googleSignIn()
+    suspend fun googleSignIn(idToken: String): Task<FirebaseUser> {
+        return authRepository.googleSignIn(idToken)
     }
 
 }

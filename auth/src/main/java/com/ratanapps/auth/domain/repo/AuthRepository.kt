@@ -7,7 +7,7 @@ interface AuthRepository {
 
     suspend fun login(email: String, password: String): Task<FirebaseUser>
 
-    suspend fun signup(name: String, email: String, password: String): Task<FirebaseUser>
+    suspend fun signup(name: String, email: String, password: String): FirebaseUser?
 
     suspend fun forgotPassword(email: String): Task<Void>
 
