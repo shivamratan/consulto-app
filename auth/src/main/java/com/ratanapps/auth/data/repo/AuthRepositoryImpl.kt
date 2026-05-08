@@ -1,5 +1,6 @@
 package com.ratanapps.auth.data.repo
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.ratanapps.auth.data.model.User
@@ -38,9 +39,11 @@ class AuthRepositoryImpl @Inject constructor(
                 createdAt = AuthUtils.getCurrentTimeStamp()
             )
 
-            firestoreService.saveUser(user).await()
+            firestoreService.saveUser(user)
             firebaseUser
         } catch (e: Exception) {
+            Log.e("AuthRepository", "Signup failed", e)
+            e.printStackTrace()
             null
         }
     }
