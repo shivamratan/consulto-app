@@ -1,9 +1,15 @@
 package com.ratanapps.auth.ui.feature.signup.viewmodel
 
+import android.content.Context
+import android.util.Log
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ratanapps.auth.domain.usecase.AuthUseCase
 import com.ratanapps.auth.domain.usecase.SignupUseCase
+import com.ratanapps.auth.ui.googleauth.GoogleAuthUIProvider
+import com.ratanapps.auth.utils.AuthUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +18,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class SignupViewModel @Inject constructor(
     val authUseCase: AuthUseCase,
-    val signupUseCase: SignupUseCase): ViewModel() {
+    val signupUseCase: SignupUseCase,
+    val googleAuthUIProvider: GoogleAuthUIProvider): ViewModel() {
 
     private val _signupUIState = MutableStateFlow(SignUpUIState())
     val signupUIState: MutableStateFlow<SignUpUIState> = _signupUIState
@@ -78,8 +85,50 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    fun onGoogleSignInClick() {
+    fun onGoogleSignInClick(context: Context) {
+        viewModelScope.launch {
 
+            try {
+                _signupUIState.value = _signupUIState.value.copy(isLoading = true)
+                val googleIdToken = googleAuthUIProvider.googleSignIn(context)
+                if (googleIdToken != null) {
+                    val firebaseUser = authUseCase.googleSignIn(googleIdToken)
+
+                    if (firebaseUser != null) {
+                        _signupUIState.value = _signupUIState.value.copy(
+                            isLoading = false,
+                            error = null,
+                            isSignUpFailed = false,
+                            isSuccessfulSignUp = true
+                        )
+                    } else {
+                        _signupUIState.value = _signupUIState.value.copy(
+                            isLoading = false,
+                            error = "Something went wrong",
+                            isSignUpFailed = true,
+                            isSuccessfulSignUp = false
+                        )
+                    }
+                } else {
+                    _signupUIState.value = _signupUIState.value.copy(
+                        isLoading = false
+                    )
+                }
+            } catch (e: GetCredentialException) {
+                _signupUIState.value = _signupUIState.value.copy(
+                    isLoading = false,
+                    showNoAccountError = true
+                )
+            } catch (e: Exception) {
+                _signupUIState.value = _signupUIState.value.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun dismissNoAccountError() {
+        _signupUIState.value = _signupUIState.value.copy(showNoAccountError = false)
     }
 }
 
@@ -95,5 +144,6 @@ data class SignUpUIState(
     val error: String? = null,
     val isPasswordVisible: Boolean = false,
     val isSuccessfulSignUp: Boolean = false,
-    val isSignUpFailed: Boolean = false
+    val isSignUpFailed: Boolean = false,
+    val showNoAccountError: Boolean = false
 )

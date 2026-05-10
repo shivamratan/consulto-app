@@ -11,7 +11,7 @@ interface AuthRepository {
 
     suspend fun forgotPassword(email: String): Task<Void>
 
-    suspend fun googleSignIn(idToken: String): Task<FirebaseUser>
+    suspend fun googleSignIn(idToken: String): FirebaseUser?
 
     fun logout()
 }

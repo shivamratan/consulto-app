@@ -2,7 +2,9 @@ package com.ratanapps.auth.data.repo
 
 import android.util.Log
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.ratanapps.auth.data.model.User
 import com.ratanapps.auth.data.service.FirebaseAuthService
 import com.ratanapps.auth.data.service.FirestoreService
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     val firebaseAuthService: FirebaseAuthService,
-    val firestoreService: FirestoreService
+    val firestoreService: FirestoreService,
+    val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
     override suspend fun login(
@@ -52,8 +55,15 @@ class AuthRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun googleSignIn(idToken: String): Task<FirebaseUser> {
-        TODO("Not yet implemented")
+    override suspend fun googleSignIn(idToken: String): FirebaseUser? {
+        return try {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            val authResult = firebaseAuth.signInWithCredential(credential).await()
+            authResult.user ?: throw Exception("Google sign-in failed")
+        } catch (exception: Exception) {
+            Log.e("AuthRepository", "Google sign-in failed", exception)
+            null
+        }
     }
 
     override fun logout() {

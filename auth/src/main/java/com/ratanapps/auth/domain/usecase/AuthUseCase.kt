@@ -20,7 +20,7 @@ class AuthUseCase @Inject constructor(val authRepository: AuthRepository) {
         return authRepository.forgotPassword(email)
     }
 
-    suspend fun googleSignIn(idToken: String): Task<FirebaseUser> {
+    suspend fun googleSignIn(idToken: String): FirebaseUser? {
         return authRepository.googleSignIn(idToken)
     }
 
