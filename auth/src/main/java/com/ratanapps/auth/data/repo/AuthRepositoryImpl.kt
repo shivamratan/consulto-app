@@ -59,7 +59,17 @@ class AuthRepositoryImpl @Inject constructor(
         return try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             val authResult = firebaseAuth.signInWithCredential(credential).await()
-            authResult.user ?: throw Exception("Google sign-in failed")
+            val firebaseUser = authResult.user ?: return null
+
+            val user = User(
+                uId = firebaseUser.uid,
+                name = firebaseUser.displayName ?: "",
+                email = firebaseUser.email ?: "",
+                createdAt = AuthUtils.getCurrentTimeStamp()
+            )
+
+            firestoreService.saveUser(user)
+            firebaseUser
         } catch (exception: Exception) {
             Log.e("AuthRepository", "Google sign-in failed", exception)
             null
