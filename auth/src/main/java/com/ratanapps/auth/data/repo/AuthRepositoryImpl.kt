@@ -9,6 +9,7 @@ import com.ratanapps.auth.data.model.User
 import com.ratanapps.auth.data.service.FirebaseAuthService
 import com.ratanapps.auth.data.service.FirestoreService
 import com.ratanapps.auth.domain.repo.AuthRepository
+import com.ratanapps.auth.ui.util.ComposeUtil
 import com.ratanapps.auth.utils.AuthUtils
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -22,8 +23,11 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun login(
         email: String,
         password: String
-    ): Task<FirebaseUser> {
-        TODO("Not yet implemented")
+    ): FirebaseUser? {
+
+        val authResult = firebaseAuthService.signInWithEmailAndPassword(email, password).await()
+        val firebaseUser = authResult.user ?: return null
+        return firebaseUser
     }
 
     override suspend fun signup(
@@ -55,20 +59,26 @@ class AuthRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun googleSignIn(idToken: String): FirebaseUser? {
+    // This code can be as google signup & google sign in as well
+    override suspend fun googleSignUp(idToken: String): FirebaseUser? {
         return try {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             val authResult = firebaseAuth.signInWithCredential(credential).await()
             val firebaseUser = authResult.user ?: return null
 
-            val user = User(
-                uId = firebaseUser.uid,
-                name = firebaseUser.displayName ?: "",
-                email = firebaseUser.email ?: "",
-                createdAt = AuthUtils.getCurrentTimeStamp()
-            )
+            val existingUser = firestoreService.getUserById(firebaseUser.uid ?: "")
 
-            firestoreService.saveUser(user)
+            if (existingUser != null) {
+                val user = User(
+                    uId = firebaseUser.uid,
+                    name = firebaseUser.displayName ?: "",
+                    email = firebaseUser.email ?: "",
+                    createdAt = AuthUtils.getCurrentTimeStamp()
+                )
+
+                firestoreService.saveUser(user)
+            }
+
             firebaseUser
         } catch (exception: Exception) {
             Log.e("AuthRepository", "Google sign-in failed", exception)

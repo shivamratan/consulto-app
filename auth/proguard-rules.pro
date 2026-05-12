@@ -16,6 +16,8 @@
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep Firebase model classes
+-keepclassmembers class com.ratanapps.auth.data.model.** {
+  *;
+}
+-keep class com.ratanapps.auth.data.model.** { *; }

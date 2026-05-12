@@ -5,13 +5,13 @@ import com.google.firebase.auth.FirebaseUser
 
 interface AuthRepository {
 
-    suspend fun login(email: String, password: String): Task<FirebaseUser>
+    suspend fun login(email: String, password: String): FirebaseUser?
 
     suspend fun signup(name: String, email: String, password: String): FirebaseUser?
 
     suspend fun forgotPassword(email: String): Task<Void>
 
-    suspend fun googleSignIn(idToken: String): FirebaseUser?
+    suspend fun googleSignUp(idToken: String): FirebaseUser?
 
     fun logout()
 }

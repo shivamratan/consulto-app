@@ -17,4 +17,26 @@ class FirestoreService @Inject constructor(val fireStore: FirebaseFirestore) {
             .await()
     }
 
+    suspend fun getUserByEmail(email: String): User? {
+        val querySnapshot = fireStore
+            .collection(AuthConstant.FIRESTORE_COLLECTION_USER)
+            .whereEqualTo("email", email)
+            .get()
+            .await()
+
+        return querySnapshot.documents.firstOrNull()?.toObject(User::class.java)
+    }
+
+    suspend fun getUserById(userId: String): User? {
+        val documentSnapshot = fireStore
+            .collection(AuthConstant.FIRESTORE_COLLECTION_USER)
+            .document(userId)
+            .get()
+            .await()
+
+        return documentSnapshot.toObject(User::class.java)
+    }
+
+
+
 }

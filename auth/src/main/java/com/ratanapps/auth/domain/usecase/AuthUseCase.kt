@@ -8,7 +8,7 @@ import com.ratanapps.auth.domain.repo.AuthRepository
 
 class AuthUseCase @Inject constructor(val authRepository: AuthRepository) {
 
-    suspend fun login(email: String, password: String): Task<FirebaseUser> {
+    suspend fun login(email: String, password: String): FirebaseUser? {
         return authRepository.login(email, password)
     }
 
@@ -20,8 +20,12 @@ class AuthUseCase @Inject constructor(val authRepository: AuthRepository) {
         return authRepository.forgotPassword(email)
     }
 
+    suspend fun googleSignUp(idToken: String): FirebaseUser? {
+        return authRepository.googleSignUp(idToken)
+    }
+
     suspend fun googleSignIn(idToken: String): FirebaseUser? {
-        return authRepository.googleSignIn(idToken)
+        return authRepository.googleSignUp(idToken)
     }
 
 }

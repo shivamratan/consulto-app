@@ -1,18 +1,16 @@
 package com.ratanapps.auth.ui.feature.signup.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.credentials.exceptions.GetCredentialException
-import androidx.credentials.exceptions.NoCredentialException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ratanapps.auth.domain.usecase.AuthUseCase
 import com.ratanapps.auth.domain.usecase.SignupUseCase
 import com.ratanapps.auth.ui.googleauth.GoogleAuthUIProvider
-import com.ratanapps.auth.utils.AuthUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -22,7 +20,7 @@ class SignupViewModel @Inject constructor(
     val googleAuthUIProvider: GoogleAuthUIProvider): ViewModel() {
 
     private val _signupUIState = MutableStateFlow(SignUpUIState())
-    val signupUIState: MutableStateFlow<SignUpUIState> = _signupUIState
+    val signupUIState: StateFlow<SignUpUIState> = _signupUIState
 
     fun onUserNameChange(username: String) {
         _signupUIState.value = _signupUIState.value.copy(username = username)

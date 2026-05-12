@@ -11,11 +11,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ratanapps.auth.ui.navigation.authNavGraph
+import com.ratanapps.consultoapp.ui.HomeViewModel
 
 @Composable
 fun NavGraph(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    activityViewModel: HomeViewModel
 ) {
     NavHost(
         navController = navController,
