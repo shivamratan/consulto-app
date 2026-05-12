@@ -13,5 +13,5 @@ interface AuthRepository {
 
     suspend fun googleSignUp(idToken: String): FirebaseUser?
 
-    fun logout()
+    suspend fun logout()
 }

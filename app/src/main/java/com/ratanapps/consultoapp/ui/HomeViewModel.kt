@@ -3,6 +3,7 @@ package com.ratanapps.consultoapp.ui
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ratanapps.auth.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 // Global Activity ViewModel
 @HiltViewModel
-class HomeViewModel @Inject constructor(): ViewModel() {
+class HomeViewModel @Inject constructor(val logoutUseCase: LogoutUseCase): ViewModel() {
 
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
@@ -30,5 +31,11 @@ class HomeViewModel @Inject constructor(): ViewModel() {
 
     companion object {
         private const val SPLASH_SCREEN_DELAY = 500L
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase.invoke()
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.ratanapps.auth.data.repo
 
 import android.util.Log
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -17,7 +19,8 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     val firebaseAuthService: FirebaseAuthService,
     val firestoreService: FirestoreService,
-    val firebaseAuth: FirebaseAuth
+    val firebaseAuth: FirebaseAuth,
+    val credentialManager: CredentialManager,
 ) : AuthRepository {
 
     override suspend fun login(
@@ -86,7 +89,10 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun logout() {
-        TODO("Not yet implemented")
+    override suspend fun logout() {
+        firebaseAuth.signOut()
+        credentialManager.clearCredentialState(
+            ClearCredentialStateRequest()
+        )
     }
 }
