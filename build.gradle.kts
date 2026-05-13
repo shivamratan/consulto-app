@@ -13,10 +13,12 @@ plugins {
 
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
-    configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+    extensions.configure(io.gitlab.arturbosch.detekt.extensions.DetektExtension::class.java) {
         config.setFrom(files("${project.rootDir}/config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
+    }
 
+    tasks.withType(io.gitlab.arturbosch.detekt.Detekt::class.java).configureEach {
         exclude("**/ui/**")
     }
 }
