@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
+import com.ratanapps.auth.ui.navigation.AuthRoutes
 import com.ratanapps.auth.ui.navigation.authNavGraph
 import com.ratanapps.auth.ui.util.ComposeUtil
 import com.ratanapps.consultoapp.ui.HomeViewModel
@@ -51,7 +52,11 @@ fun NavGraph(
 
                     Button(onClick = {
                         activityViewModel.logout()
-                        navController.navigate("login")
+                        navController.navigate("login") {
+                            popUpTo("home") {
+                                inclusive = true
+                            }
+                        }
                     }) {
                         Text(text = "Logout")
                     }
@@ -63,11 +68,19 @@ fun NavGraph(
         authNavGraph(
             navController = navController,
             onLoginSuccess = {
+                navController.navigate("home") {
+                    popUpTo(AuthRoutes.LOGIN) {
+                        inclusive = true
+                    }
+                }
 
-                navController.navigate("home")
             },
             onGoogleSignupSuccess = {
-                navController.navigate("home")
+                navController.navigate("home") {
+                    popUpTo(AuthRoutes.SIGNUP) {
+                        inclusive = true
+                    }
+                }
             }
         )
     }
