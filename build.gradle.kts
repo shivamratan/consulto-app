@@ -16,5 +16,7 @@ subprojects {
     configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
         config.setFrom(files("${project.rootDir}/config/detekt/detekt.yml"))
         buildUponDefaultConfig = true
+
+        exclude("**/ui/**")
     }
 }

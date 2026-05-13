@@ -84,6 +84,8 @@ private val TextSecondaryColor = Color(0xFF6B7280)
  * @param onSignUpClick Callback triggered when the user wants to navigate to the Signup screen.
  * @param onLoginSuccess Callback triggered after a successful login.
  */
+
+
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
