@@ -24,3 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Consulto App"
 include(":app")
+include(":auth")
+include(":core")

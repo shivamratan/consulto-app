@@ -2,6 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <queries>
+        <package android:name="com.google.android.gms" />
+        <intent>
+            <action android:name="com.google.android.gms.auth.api.signin.SERVICE_OFFER_END_POINT" />
+        </intent>
+        <intent>
+            <action android:name="com.google.android.gms.auth.api.signin.INTERNAL_SIGN_IN" />
+        </intent>
+    </queries>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".ConsultoApplication"
         android:allowBackup="true"

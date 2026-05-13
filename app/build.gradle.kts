@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -77,11 +78,21 @@ dependencies {
     // Material Icons dependency
     implementation(libs.material.icons.extended)
 
+    implementation(project(":core"))
+    implementation(project(":auth"))
+
     // Splash screen dependency
     implementation(libs.splashscreen)
 
     // Coil dependency
     implementation(libs.coil.compose)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
