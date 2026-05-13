@@ -97,14 +97,14 @@ class SignupViewModel @Inject constructor(
                             isLoading = false,
                             error = null,
                             isSignUpFailed = false,
-                            isSuccessfulSignUp = true
+                            isGoogleSignupSuccess = true
                         )
                     } else {
                         _signupUIState.value = _signupUIState.value.copy(
                             isLoading = false,
                             error = "Something went wrong",
                             isSignUpFailed = true,
-                            isSuccessfulSignUp = false
+                            isGoogleSignupSuccess = false
                         )
                     }
                 } else {
@@ -142,6 +142,7 @@ data class SignUpUIState(
     val error: String? = null,
     val isPasswordVisible: Boolean = false,
     val isSuccessfulSignUp: Boolean = false,
+    val isGoogleSignupSuccess: Boolean = false,
     val isSignUpFailed: Boolean = false,
     val showNoAccountError: Boolean = false
 )

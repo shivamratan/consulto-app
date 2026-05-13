@@ -12,7 +12,8 @@ import com.ratanapps.auth.utils.AuthUtils
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavController,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    onGoogleSignupSuccess: () -> Unit
 ) {
     composable(AuthRoutes.LOGIN) {
         val loginViewModel: LoginViewModel = hiltViewModel()
@@ -39,6 +40,9 @@ fun NavGraphBuilder.authNavGraph(
             viewModel = signupViewModel,
             onSuccessSignup = {
                 navController.popBackStack()
+            },
+            onGoogleSignupSuccess = {
+                onGoogleSignupSuccess.invoke()
             }
         )
     }

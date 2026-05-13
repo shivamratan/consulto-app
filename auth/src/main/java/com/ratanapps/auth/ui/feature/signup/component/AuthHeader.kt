@@ -31,7 +31,7 @@ fun AuthHeader(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
+        /*Text(
             text = welcomeText,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
@@ -39,7 +39,7 @@ fun AuthHeader(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(32.dp))*/
 
         Column(
             modifier = Modifier.fillMaxWidth(),
