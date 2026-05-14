@@ -43,7 +43,14 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable("home") {
-            HomeScreen(modifier = modifier)
+            HomeScreen(modifier = modifier) {
+                activityViewModel.logout()
+                navController.navigate("login") {
+                    popUpTo("home") {
+                        inclusive = true
+                    }
+                }
+            }
            /* Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
