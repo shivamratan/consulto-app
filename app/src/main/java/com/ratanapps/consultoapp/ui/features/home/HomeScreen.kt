@@ -17,8 +17,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.ratanapps.consultoapp.ui.HomeViewModel
 import com.ratanapps.consultoapp.ui.features.booking.BookingScreen
 import com.ratanapps.consultoapp.ui.features.chat.ChatScreen
+import com.ratanapps.consultoapp.ui.features.common.ConsultoAlertDialog
 import com.ratanapps.consultoapp.ui.features.dashboard.DashboardScreen
 import com.ratanapps.consultoapp.ui.features.home.component.HomeBottomBar
 import com.ratanapps.consultoapp.ui.features.home.component.HomeNavDrawerSheet
@@ -28,18 +30,23 @@ import com.ratanapps.consultoapp.ui.features.profile.ProfileScreen
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, onLogoutClicked: ()->Unit = {}) {
-    var searchQuery by remember { mutableStateOf("") }
+fun HomeScreen(modifier: Modifier = Modifier, activityViewModel: HomeViewModel, onLogoutClicked: ()->Unit = {}) {
+
     val bottomBarNavController: NavHostController = rememberNavController()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
 
     ModalNavigationDrawer(modifier = modifier,
         drawerState = drawerState,
         drawerContent = {
             HomeNavDrawerSheet(
-                onLogoutClicked = onLogoutClicked
+                onLogoutClicked = {
+                    scope.launch {
+                        if (drawerState.isOpen)
+                            drawerState.close()
+                    }
+                    activityViewModel.showLogOutConfirmDialog.value = true
+                }
             )
         },
         content = {
@@ -76,14 +83,27 @@ fun HomeScreen(modifier: Modifier = Modifier, onLogoutClicked: ()->Unit = {}) {
                         ProfileScreen()
                     }
                 }
+
+                if (activityViewModel.showLogOutConfirmDialog.value) {
+                    ConsultoAlertDialog(
+                        onDismissRequest = { activityViewModel.showLogOutConfirmDialog.value = false },
+                        onConfirmation = {
+                            activityViewModel.showLogOutConfirmDialog.value = false
+                            onLogoutClicked.invoke()
+                        },
+                        dialogTitle = "Log out",
+                        dialogText = "Are you sure want to logout ?"
+                    )
+                }
+
             }
         }
         )
 
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     HomeScreen()
-}
+}*/

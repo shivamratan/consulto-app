@@ -43,7 +43,7 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable("home") {
-            HomeScreen(modifier = modifier) {
+            HomeScreen(modifier = modifier, activityViewModel) {
                 activityViewModel.logout()
                 navController.navigate("login") {
                     popUpTo("home") {

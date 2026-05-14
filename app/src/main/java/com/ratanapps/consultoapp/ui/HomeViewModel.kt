@@ -22,6 +22,8 @@ class HomeViewModel @Inject constructor(val logoutUseCase: LogoutUseCase): ViewM
     // Global state for changing the state of theme
     var isDark = mutableStateOf(false)
 
+    var showLogOutConfirmDialog = mutableStateOf(false)
+
     init {
         viewModelScope.launch {
             delay(SPLASH_SCREEN_DELAY)
