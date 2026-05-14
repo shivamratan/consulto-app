@@ -69,7 +69,7 @@ fun HomeNavDrawerSheet(onLogoutClicked: ()->Unit) {
                             Text(
                                 text = "Shivam Ratan",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 13.sp,
+                                fontSize = 16.sp,
                                 color = Color.Black
                             )
 
