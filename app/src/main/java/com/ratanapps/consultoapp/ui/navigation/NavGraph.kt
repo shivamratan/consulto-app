@@ -20,6 +20,7 @@ import com.ratanapps.auth.ui.navigation.AuthRoutes
 import com.ratanapps.auth.ui.navigation.authNavGraph
 import com.ratanapps.auth.ui.util.ComposeUtil
 import com.ratanapps.consultoapp.ui.HomeViewModel
+import com.ratanapps.consultoapp.ui.features.home.HomeScreen
 import com.ratanapps.consultoapp.ui.utils.ComposeUtils
 
 @Composable
@@ -42,7 +43,8 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable("home") {
-            Box(
+            HomeScreen(modifier = modifier)
+           /* Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
@@ -62,7 +64,7 @@ fun NavGraph(
                     }
                 }
 
-            }
+            }*/
         }
 
         authNavGraph(

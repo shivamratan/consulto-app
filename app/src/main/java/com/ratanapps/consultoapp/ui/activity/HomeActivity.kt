@@ -49,13 +49,11 @@ class HomeActivity : ComponentActivity() {
 
             ConsultoAppTheme(darkTheme = isDark) {
                 val navController = rememberNavController()
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavGraph(
                         navController = navController,
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier,
                         activityViewModel = homeActivityViewModel
                     )
-                }
             }
         }
     }
